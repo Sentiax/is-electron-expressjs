@@ -1,11 +1,14 @@
-function isBrowserElectron(res, req) {
-   let isElectron = false;
-    if (!res.headers['user-agent'].includes("Electron")) {
-        isElectron = false;
-    } else {
-        isElectron = true;
+function isBrowserElectron(req, res) {
+    try {
+        const userAgent = req.headers['user-agent'];
+        if (!userAgent) {
+            return false;
+        }
+        return userAgent.includes("Electron");
+    } catch (error) {
+        console.error('Error checking Electron user agent:', error);
+        return false;
     }
-    return isElectron;  
 }
 
 module.exports = isBrowserElectron;
